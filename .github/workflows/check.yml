@@ -17,3 +17,10 @@ jobs:
         with:
           virtualenvs-in-project: true
           virtualenvs-path: .venv
+
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
+
+      - name: Ruff
+        run: poetry run ruff check .
